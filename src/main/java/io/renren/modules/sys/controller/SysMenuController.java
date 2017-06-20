@@ -4,8 +4,6 @@ import io.renren.common.annotation.SysLog;
 import io.renren.common.exception.RRException;
 import io.renren.common.utils.Constant;
 import io.renren.common.utils.Constant.MenuType;
-import io.renren.common.utils.PageUtils;
-import io.renren.common.utils.Query;
 import io.renren.common.utils.R;
 import io.renren.modules.sys.entity.SysMenuEntity;
 import io.renren.modules.sys.service.ShiroService;
@@ -13,11 +11,13 @@ import io.renren.modules.sys.service.SysMenuService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -40,15 +40,10 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:menu:list")
-	public R list(@RequestParam Map<String, Object> params){
-		//查询列表数据
-		Query query = new Query(params);
-		List<SysMenuEntity> menuList = sysMenuService.queryList(query);
-		int total = sysMenuService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(menuList, total, query.getLimit(), query.getPage());
-		
-		return R.ok().put("page", pageUtil);
+	public List<SysMenuEntity> list(){
+		List<SysMenuEntity> menuList = sysMenuService.queryList(new HashMap<String, Object>());
+
+		return menuList;
 	}
 	
 	/**
@@ -136,13 +131,18 @@ public class SysMenuController extends AbstractController {
 	@SysLog("删除菜单")
 	@RequestMapping("/delete")
 	@RequiresPermissions("sys:menu:delete")
-	public R delete(@RequestBody Long[] menuIds){
-		for(Long menuId : menuIds){
-			if(menuId.longValue() <= 30){
-				return R.error("系统菜单，不能删除");
-			}
+	public R delete(long menuId){
+		if(menuId <= 30){
+			return R.error("系统菜单，不能删除");
 		}
-		sysMenuService.deleteBatch(menuIds);
+
+		//判断是否有子菜单或按钮
+		List<SysMenuEntity> menuList = sysMenuService.queryListParentId(menuId);
+		if(menuList.size() > 0){
+			return R.error("请先删除子菜单或按钮");
+		}
+
+		sysMenuService.deleteBatch(new Long[]{menuId});
 		
 		return R.ok();
 	}

@@ -1,6 +1,7 @@
 package io.renren.common.utils;
 
 import io.renren.common.xss.SQLFilter;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -30,10 +31,15 @@ public class Query extends LinkedHashMap<String, Object> {
         this.put("limit", limit);
 
         //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
-        String sidx = params.get("sidx").toString();
-        String order = params.get("order").toString();
-        this.put("sidx", SQLFilter.sqlInject(sidx));
-        this.put("order", SQLFilter.sqlInject(order));
+        String sidx = (String)params.get("sidx");
+        String order = (String)params.get("order");
+        if(StringUtils.isNotBlank(sidx)){
+            this.put("sidx", SQLFilter.sqlInject(sidx));
+        }
+        if(StringUtils.isNotBlank(order)){
+            this.put("order", SQLFilter.sqlInject(order));
+        }
+
     }
 
 
