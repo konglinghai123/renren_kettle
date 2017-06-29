@@ -197,7 +197,7 @@
 						<command>pkill -f ${pack-name}</command>
 						<command>rm -f ${service-path}/renren.log</command>
 						<!-- Restart jar package，write result into renren.log -->
-						<command><![CDATA[nohup java -jar ${service-path}/${pack-name} > ${service-path}/nohup.out 2>&1 & ]]></command>
+						<command><![CDATA[nohup java -jar ${service-path}/${pack-name} > ${service-path}/renren.log 2>&1 & ]]></command>
 						<command><![CDATA[netstat -nptl]]></command>
 						<command><![CDATA[ps -ef | grep java | grep -v grep]]></command>
 					</commands>
