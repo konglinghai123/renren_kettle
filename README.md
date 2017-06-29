@@ -39,7 +39,7 @@ renren-fast
 │ 
 ├─RenrenApplication 项目启动类
 │  
-├──rsources 
+├──resources 
 │  ├─mapper SQL对应的XML文件
 │  ├─static 第三方库、插件等静态资源
 │  └─views  项目静态页面
