@@ -29,7 +29,7 @@ renren-fast
 │  ├─validator 后台校验
 │  └─xss XSS过滤
 │ 
-├─config Spring Boot配置
+├─config 配置信息
 │ 
 ├─modules 功能模块
 │  ├─api API接口模块(APP调用)
