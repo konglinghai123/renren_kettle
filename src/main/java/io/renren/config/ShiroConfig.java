@@ -31,11 +31,9 @@ public class ShiroConfig {
     @Bean("sessionManager")
     public SessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        //设置session过期时间为1分钟(单位：毫秒)，默认为30分钟
-//        sessionManager.setGlobalSessionTimeout(60 * 60 * 1000);
-//        sessionManager.setSessionValidationSchedulerEnabled(true);
-//        sessionManager.setSessionIdUrlRewritingEnabled(false);
-        sessionManager.setSessionIdCookieEnabled(false);
+        sessionManager.setSessionValidationSchedulerEnabled(true);
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
+        //sessionManager.setSessionIdCookieEnabled(false);
         return sessionManager;
     }
 
@@ -61,6 +59,7 @@ public class ShiroConfig {
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/druid/**", "anon");
+        filterMap.put("/api/**", "anon");
 
         //swagger配置
         filterMap.put("/swagger**", "anon");
@@ -74,6 +73,7 @@ public class ShiroConfig {
         filterMap.put("/fonts/**", "anon");
         filterMap.put("/plugins/**", "anon");
         filterMap.put("/favicon.ico", "anon");
+        filterMap.put("/captcha.jpg", "anon");
         filterMap.put("/", "anon");
         filterMap.put("/**", "oauth2");
         shiroFilter.setFilterChainDefinitionMap(filterMap);

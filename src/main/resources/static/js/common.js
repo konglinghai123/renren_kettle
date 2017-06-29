@@ -8,7 +8,7 @@ window.T = {};
 
 // 获取请求参数
 // 使用示例
-// location.href = http://localhost:8080/index.html?id=123
+// location.href = http://localhost/index.html?id=123
 // T.p('id') --> 123;
 var url = function(name) {
 	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -18,14 +18,14 @@ var url = function(name) {
 T.p = url;
 
 //请求前缀
-//var baseURL = "http://demo.open.renren.io/renren-security/";
-//var baseURL = "http://localhost/";
-var baseURL = "../../";
+//var baseURL = "http://demo.open.renren.io/renren-fast/";
+//var baseURL = "/renren-fast/";
+var baseURL = "/";
 
 //登录token
 var token = localStorage.getItem("token");
 if(token == 'null'){
-    parent.location.href ='../login.html';
+    parent.location.href = 'login.html';
 }
 
 //jquery全局配置
@@ -38,7 +38,7 @@ $.ajaxSetup({
     complete: function(xhr) {
         //token过期，则跳转到登录页面
         if(xhr.responseJSON.code == 401){
-            parent.location.href ='../login.html';
+            parent.location.href = 'login.html';
         }
     }
 });

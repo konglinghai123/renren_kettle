@@ -6,6 +6,7 @@
   <title>人人快速开发平台</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/AdminLTE.min.css">
@@ -32,12 +33,20 @@
         <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle"></i> {{errorMsg}}</h4>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" v-model="username" placeholder="账号">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          <input type="text" class="form-control" v-model="username" placeholder="账号">
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" v-model="password" @keyup.enter="login" placeholder="密码">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          <input type="password" class="form-control" v-model="password" placeholder="密码">
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+          <input type="text" class="form-control" v-model="captcha" @keyup.enter="login" placeholder="验证码">
+          <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+          <img alt="如果看不清楚，请单击图片刷新！" class="pointer" :src="src" @click="refreshCode">
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" @click="refreshCode">点击刷新</a>
       </div>
 
       <div class="row">
@@ -69,8 +78,10 @@ var vm = new Vue({
 	data:{
 		username: '',
 		password: '',
+        captcha: '',
 		error: false,
-		errorMsg: ''
+		errorMsg: '',
+        src: 'captcha.jpg'
 	},
 	beforeCreate: function(){
 		if(self != top){
@@ -78,8 +89,11 @@ var vm = new Vue({
 		}
 	},
 	methods: {
+        refreshCode: function(){
+            this.src = "captcha.jpg?t=" + $.now();
+        },
 		login: function () {
-			var data = "username="+vm.username+"&password="+vm.password;
+            var data = "username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha;
 			$.ajax({
 				type: "POST",
 			    url: baseURL + "sys/login",
@@ -92,6 +106,8 @@ var vm = new Vue({
 					}else{
 						vm.error = true;
 						vm.errorMsg = r.msg;
+
+                        vm.refreshCode();
 					}
 				}
 			});

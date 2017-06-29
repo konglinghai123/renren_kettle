@@ -34,10 +34,10 @@ var vm = new Vue({
 	data:{
 		user:{},
 		menuList:{},
-		main:"modules/sys/main.html",
+		main:"main.html",
 		password:'',
 		newPassword:'',
-        navTitle:"控制台"
+        navTitle:"欢迎页"
 	},
 	methods: {
 		getMenuList: function () {
@@ -85,7 +85,17 @@ var vm = new Vue({
 			//删除本地token
             localStorage.removeItem("token");
             //跳转到登录页面
-            location.href ='login.html';
+            location.href = 'login.html';
+        },
+        donate: function () {
+            layer.open({
+                type: 2,
+                title: false,
+                area: ['806px', '467px'],
+                closeBtn: 1,
+                shadeClose: false,
+                content: ['http://cdn.renren.io/donate.jpg', 'no']
+            });
         }
 	},
 	created: function(){
