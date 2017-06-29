@@ -1,6 +1,6 @@
 **项目说明** 
 - renren-fast是一个轻量级的Java快速开发平台，能快速开发项目并交付【接私活利器】
- 
+<br> 
  
 
 
@@ -16,7 +16,36 @@
 - 引入云存储服务，已支持：七牛云、阿里云、腾讯云等
 - 引入swagger文档支持，方便编写API接口文档
 - 引入路由机制，刷新页面会停留在当前页
+<br> 
 
+**项目结构** 
+```
+renren-fast
+├─doc  项目SQL语句
+│
+├─common 公共模块
+│  ├─aspect 系统日志
+│  ├─exception 异常处理
+│  ├─validator 后台校验
+│  └─xss XSS过滤
+│ 
+├─config Spring Boot配置
+│ 
+├─modules 功能模块
+│  ├─api API接口模块(APP调用)
+│  ├─job 定时任务模块
+│  ├─oss 文件服务模块
+│  └─sys 权限模块
+│ 
+├─RenrenApplication 项目启动类
+│  
+├──rsources 
+│  ├─mapper SQL对应的XML文件
+│  ├─static 第三方库、插件等静态资源
+│  └─views  项目静态页面
+
+```
+<br> 
 
 **如何交流、反馈、参与贡献？** 
 - 开发文档：http://www.renren.io/open/renren-fast/
@@ -25,8 +54,7 @@
 - [编程入门教程](http://www.renren.io)：http://www.renren.io   
 - 官方QQ群：324780204、145799952
 - 如需关注项目最新动态，请Watch、Star项目，同时也是对项目最好的支持
-
-
+<br> 
 
 
 **技术选型：** 
@@ -38,14 +66,13 @@
 - 数据库连接池：Druid 1.0
 - 日志管理：SLF4J 1.7、Log4j
 - 页面交互：Vue2.x
-
+<br> 
 
 
  **项目演示**
- 
 - 演示地址：http://demo.open.renren.io/renren-fast
 - 账号密码：admin/admin
-
+<br> 
 
 **演示效果图：**
 ![输入图片说明](http://cdn.renren.io/img/4f15a5513e4e4a00a07294e87c548982 "在这里输入图片标题")
@@ -55,7 +82,3 @@
 ![输入图片说明](http://cdn.renren.io/img/069045e6c6d24d88b6c2827a1b625da4 "在这里输入图片标题")
 ![输入图片说明](http://cdn.renren.io/img/5d4d6c1acd5c4455930dc5dc7d88ad82 "在这里输入图片标题")
 ![输入图片说明](http://cdn.renren.io/img/35dfe497ea7642028c7d6115a5a1c5e8 "在这里输入图片标题")
-
-
-
-
