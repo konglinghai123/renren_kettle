@@ -69,6 +69,16 @@ renren-fast
 <br> 
 
 
+ **本地部署**
+- 通过git下载源码
+- 创建数据库renren_fast，数据库编码为UTF-8
+- 执行doc/db.sql文件，初始化数据
+- 修改application-dev.yml，更新MySQL账号和密码
+- Eclipse、IDEA运行RenrenApplication.java，则可启动项目
+- 项目访问路径：http://localhost
+- 账号密码：admin/admin
+
+
  **项目演示**
 - 演示地址：http://demo.open.renren.io/renren-fast
 - 账号密码：admin/admin
