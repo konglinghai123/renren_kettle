@@ -35,7 +35,8 @@
 			`username`, 
 			`operation`, 
 			`method`, 
-			`params`, 
+			`params`,
+			`time`,
 			`ip`, 
 			`create_date`
 		)
@@ -45,22 +46,11 @@
 			#{operation}, 
 			#{method}, 
 			#{params}, 
-			#{ip}, 
+			#{time},
+			#{ip},
 			#{createDate}
 		)
 	</insert>
-	 
-	<update id="update" parameterType="io.renren.modules.sys.entity.SysLogEntity">
-		update sys_log 
-		<set>
-			<if test="username != null">`username` = #{username}, </if>
-			<if test="operation != null">`operation` = #{operation}, </if>
-			<if test="method != null">`method` = #{method}, </if>
-			<if test="params != null">`params` = #{params}, </if>
-			<if test="ip != null">`ip` = #{ip} </if>
-		</set>
-		where id = #{id}
-	</update>
 	
 	<delete id="delete">
 		delete from sys_log where id = #{value}

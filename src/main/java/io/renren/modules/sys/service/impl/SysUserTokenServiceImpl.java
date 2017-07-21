@@ -24,11 +24,6 @@ public class SysUserTokenServiceImpl implements SysUserTokenService {
 	}
 
 	@Override
-	public SysUserTokenEntity queryByToken(String token) {
-		return sysUserTokenDao.queryByToken(token);
-	}
-
-	@Override
 	public void save(SysUserTokenEntity token){
 		sysUserTokenDao.save(token);
 	}
@@ -71,5 +66,17 @@ public class SysUserTokenServiceImpl implements SysUserTokenService {
 		R r = R.ok().put("token", token).put("expire", EXPIRE);
 
 		return r;
+	}
+
+	@Override
+	public void logout(long userId) {
+		//生成一个token
+		String token = TokenGenerator.generateValue();
+
+		//修改token
+		SysUserTokenEntity tokenEntity = new SysUserTokenEntity();
+		tokenEntity.setUserId(userId);
+		tokenEntity.setToken(token);
+		update(tokenEntity);
 	}
 }

@@ -73,7 +73,11 @@ var vm = new Vue({
 				vm.schedule = r.schedule;
 			});
 		},
-		saveOrUpdate: function (event) {
+		saveOrUpdate: function () {
+            if(vm.validator()){
+                return ;
+            }
+
 			var url = vm.schedule.jobId == null ? "sys/schedule/save" : "sys/schedule/update";
 			$.ajax({
 				type: "POST",
@@ -194,6 +198,22 @@ var vm = new Vue({
                 postData:{'beanName': vm.q.beanName},
                 page:page 
             }).trigger("reloadGrid");
-		}
+		},
+        validator: function () {
+            if(isBlank(vm.schedule.beanName)){
+                alert("bean名称不能为空");
+                return true;
+            }
+
+            if(isBlank(vm.schedule.methodName)){
+                alert("方法名称不能为空");
+                return true;
+            }
+
+            if(isBlank(vm.schedule.cronExpression)){
+                alert("cron表达式不能为空");
+                return true;
+            }
+        }
 	}
 });

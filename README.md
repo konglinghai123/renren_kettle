@@ -77,12 +77,17 @@ renren-fast
 - Eclipse、IDEA运行RenrenApplication.java，则可启动项目
 - 项目访问路径：http://localhost
 - 账号密码：admin/admin
+- Swagger路径：http://localhost/swagger/index.html
 
 
  **项目演示**
 - 演示地址：http://demo.open.renren.io/renren-fast
 - 账号密码：admin/admin
 <br> 
+
+**接口文档效果图：**
+![输入图片说明](http://cdn.renren.io/img/6e8d7575fb8240d49b949dc0f02547bc "在这里输入图片标题")
+<br> <br> <br> 
 
 **演示效果图：**
 ![输入图片说明](http://cdn.renren.io/img/4f15a5513e4e4a00a07294e87c548982 "在这里输入图片标题")
@@ -92,3 +97,4 @@ renren-fast
 ![输入图片说明](http://cdn.renren.io/img/069045e6c6d24d88b6c2827a1b625da4 "在这里输入图片标题")
 ![输入图片说明](http://cdn.renren.io/img/5d4d6c1acd5c4455930dc5dc7d88ad82 "在这里输入图片标题")
 ![输入图片说明](http://cdn.renren.io/img/35dfe497ea7642028c7d6115a5a1c5e8 "在这里输入图片标题")
+

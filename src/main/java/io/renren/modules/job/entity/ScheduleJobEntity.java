@@ -49,7 +49,7 @@ public class ScheduleJobEntity implements Serializable {
 	private String cronExpression;
 
 	/**
-	 * 任务状态
+	 * 任务状态  0：正常  1：暂停
 	 */
 	private Integer status;
 

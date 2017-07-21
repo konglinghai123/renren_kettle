@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 系统配置信息
+ * 系统参数信息
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com

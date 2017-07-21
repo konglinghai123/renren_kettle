@@ -37,11 +37,6 @@ public class SysLogServiceImpl implements SysLogService {
 	}
 	
 	@Override
-	public void update(SysLogEntity sysLog){
-		sysLogDao.update(sysLog);
-	}
-	
-	@Override
 	public void delete(Long id){
 		sysLogDao.delete(id);
 	}

@@ -121,6 +121,10 @@ var vm = new Vue({
     		});
 		},
 		saveOrUpdate: function () {
+            if(vm.validator()){
+                return ;
+            }
+
 			//获取选择的菜单
 			var nodes = ztree.getCheckedNodes(true);
 			var menuIdList = new Array();
@@ -148,8 +152,8 @@ var vm = new Vue({
 		},
 		getMenuTree: function(roleId) {
 			//加载菜单树
-			$.get(baseURL + "sys/menu/perms", function(r){
-				ztree = $.fn.zTree.init($("#menuTree"), setting, r.menuList);
+			$.get(baseURL + "sys/menu/list", function(r){
+				ztree = $.fn.zTree.init($("#menuTree"), setting, r);
 				//展开所有节点
 				ztree.expandAll(true);
 				
@@ -165,6 +169,12 @@ var vm = new Vue({
                 postData:{'roleName': vm.q.roleName},
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+        validator: function () {
+            if(isBlank(vm.role.roleName)){
+                alert("角色名不能为空");
+                return true;
+            }
+        }
 	}
 });

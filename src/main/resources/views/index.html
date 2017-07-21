@@ -62,7 +62,7 @@
         <li class="header">导航菜单</li>
         
         <!-- vue生成的菜单 -->
-		<menu-item :item="item" v-for="item in menuList"></menu-item>
+		<menu-item :item="item" :index="index" v-for="(item, index) in menuList"></menu-item>
       </ul>
     </section>
     <!-- /.sidebar -->

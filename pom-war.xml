@@ -22,7 +22,6 @@
         <mysql.version>5.1.38</mysql.version>
         <druid.version>1.0.28</druid.version>
         <quartz.version>2.3.0</quartz.version>
-        <swagger.version>2.6.1</swagger.version>
         <commons.lang.version>2.6</commons.lang.version>
         <commons.fileupload.version>1.3.1</commons.fileupload.version>
         <commons.io.version>2.5</commons.io.version>
@@ -60,6 +59,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
@@ -93,16 +96,6 @@
                     <artifactId>c3p0</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>

@@ -14,8 +14,6 @@ public interface SysUserTokenService {
 
 	SysUserTokenEntity queryByUserId(Long userId);
 
-	SysUserTokenEntity queryByToken(String token);
-	
 	void save(SysUserTokenEntity token);
 	
 	void update(SysUserTokenEntity token);
@@ -25,5 +23,11 @@ public interface SysUserTokenService {
 	 * @param userId  用户ID
 	 */
 	R createToken(long userId);
+
+	/**
+	 * 退出，修改token值
+	 * @param userId  用户ID
+	 */
+	void logout(long userId);
 
 }

@@ -79,7 +79,11 @@ var vm = new Vue({
                 });
             });
         },
-        saveOrUpdate: function (event) {
+        saveOrUpdate: function () {
+            if(vm.validator()){
+                return ;
+            }
+
             var url = vm.menu.menuId == null ? "sys/menu/save" : "sys/menu/update";
             $.ajax({
                 type: "POST",
@@ -121,6 +125,18 @@ var vm = new Vue({
         reload: function () {
             vm.showList = true;
             Menu.table.refresh();
+        },
+        validator: function () {
+            if(isBlank(vm.menu.name)){
+                alert("菜单名称不能为空");
+                return true;
+            }
+
+            //菜单
+            if(vm.menu.type === 1 && isBlank(vm.menu.url)){
+                alert("菜单URL不能为空");
+                return true;
+            }
         }
     }
 });

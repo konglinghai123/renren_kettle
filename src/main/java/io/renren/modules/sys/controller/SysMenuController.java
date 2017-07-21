@@ -2,7 +2,6 @@ package io.renren.modules.sys.controller;
 
 import io.renren.common.annotation.SysLog;
 import io.renren.common.exception.RRException;
-import io.renren.common.utils.Constant;
 import io.renren.common.utils.Constant.MenuType;
 import io.renren.common.utils.R;
 import io.renren.modules.sys.entity.SysMenuEntity;
@@ -34,6 +33,16 @@ public class SysMenuController extends AbstractController {
 	private SysMenuService sysMenuService;
 	@Autowired
 	private ShiroService shiroService;
+
+	/**
+	 * 导航菜单
+	 */
+	@RequestMapping("/nav")
+	public R nav(){
+		List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(getUserId());
+		Set<String> permissions = shiroService.getUserPermissions(getUserId());
+		return R.ok().put("menuList", menuList).put("permissions", permissions);
+	}
 	
 	/**
 	 * 所有菜单列表
@@ -62,25 +71,6 @@ public class SysMenuController extends AbstractController {
 		root.setParentId(-1L);
 		root.setOpen(true);
 		menuList.add(root);
-		
-		return R.ok().put("menuList", menuList);
-	}
-	
-	/**
-	 * 角色授权菜单
-	 */
-	@RequestMapping("/perms")
-	@RequiresPermissions("sys:menu:perms")
-	public R perms(){
-		//查询列表数据
-		List<SysMenuEntity> menuList = null;
-		
-		//只有超级管理员，才能查看所有管理员列表
-		if(getUserId() == Constant.SUPER_ADMIN){
-			menuList = sysMenuService.queryList(new HashMap<String, Object>());
-		}else{
-			menuList = sysMenuService.queryUserList(getUserId());
-		}
 		
 		return R.ok().put("menuList", menuList);
 	}
@@ -145,16 +135,6 @@ public class SysMenuController extends AbstractController {
 		sysMenuService.deleteBatch(new Long[]{menuId});
 		
 		return R.ok();
-	}
-	
-	/**
-	 * 用户菜单列表
-	 */
-	@RequestMapping("/user")
-	public R user(){
-		List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(getUserId());
-		Set<String> permissions = shiroService.getUserPermissions(getUserId());
-		return R.ok().put("menuList", menuList).put("permissions", permissions);
 	}
 	
 	/**

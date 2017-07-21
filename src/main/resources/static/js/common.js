@@ -18,7 +18,7 @@ var url = function(name) {
 T.p = url;
 
 //请求前缀
-//var baseURL = "http://demo.open.renren.io/renren-fast/";
+//var baseURL = "http://www.juziku.com/";
 //var baseURL = "/renren-fast/";
 var baseURL = "/";
 
@@ -34,6 +34,9 @@ $.ajaxSetup({
 	cache: false,
     headers: {
         "token": token
+    },
+    xhrFields: {
+	    withCredentials: true
     },
     complete: function(xhr) {
         //token过期，则跳转到登录页面
@@ -109,4 +112,9 @@ function getSelectedRows() {
     }
     
     return grid.getGridParam("selarrrow");
+}
+
+//判断是否为空
+function isBlank(value) {
+    return !value || !/\S/.test(value)
 }

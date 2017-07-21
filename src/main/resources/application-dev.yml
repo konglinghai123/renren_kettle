@@ -16,13 +16,3 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxPoolPreparedStatementPerConnectionSize: 20
-# FastDFS 服务配置
-fdfs:
-    network-timeout: 5
-    connect-timeout: 30
-    tracker-server:
-        - 177.77.77.159:22122
-    charset: UTF-8
-    tracker-http-port: 8080
-    anti-steal-token: false
-    secret-key: FastDFS1234567890

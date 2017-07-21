@@ -17,7 +17,7 @@ public interface SysConfigDao extends BaseDao<SysConfigEntity> {
 	/**
 	 * 根据key，查询value
 	 */
-	String queryByKey(String paramKey);
+	SysConfigEntity queryByKey(String paramKey);
 	
 	/**
 	 * 根据key，更新value

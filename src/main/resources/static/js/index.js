@@ -1,20 +1,23 @@
 //生成菜单
 var menuItem = Vue.extend({
-	name: 'menu-item',
-	props:{item:{}},
-	template:[
-	          '<li>',
-	          '<a v-if="item.type === 0" href="javascript:;">',
-	          '<i v-if="item.icon != null" :class="item.icon"></i>',
-	          '<span>{{item.name}}</span>',
-	          '<i class="fa fa-angle-left pull-right"></i>',
-	          '</a>',
-	          '<ul v-if="item.type === 0" class="treeview-menu">',
-	          '<menu-item :item="item" v-for="item in item.list"></menu-item>',
-	          '</ul>',
-	          '<a v-if="item.type === 1" :href="\'#\'+item.url"><i v-if="item.icon != null" :class="item.icon"></i><i v-else class="fa fa-circle-o"></i> {{item.name}}</a>',
-	          '</li>'
-	].join('')
+    name: 'menu-item',
+    props:{item:{},index:0},
+    template:[
+        '<li :class="{active: (item.type===0 && index === 0)}">',
+        '<a v-if="item.type === 0" href="javascript:;">',
+        '<i v-if="item.icon != null" :class="item.icon"></i>',
+        '<span>{{item.name}}</span>',
+        '<i class="fa fa-angle-left pull-right"></i>',
+        '</a>',
+        '<ul v-if="item.type === 0" class="treeview-menu">',
+        '<menu-item :item="item" :index="index" v-for="(item, index) in item.list"></menu-item>',
+        '</ul>',
+        '<a v-if="item.type === 1" :href="\'#\'+item.url">' +
+        '<i v-if="item.icon != null" :class="item.icon"></i>' +
+        '<i v-else class="fa fa-circle-o"></i> {{item.name}}' +
+        '</a>',
+        '</li>'
+    ].join('')
 });
 
 //iframe自适应
@@ -41,7 +44,7 @@ var vm = new Vue({
 	},
 	methods: {
 		getMenuList: function () {
-			$.getJSON(baseURL + "sys/menu/user", function(r){
+			$.getJSON(baseURL + "sys/menu/nav", function(r){
 				vm.menuList = r.menuList;
                 window.permissions = r.permissions;
 			});
@@ -82,10 +85,17 @@ var vm = new Vue({
 			});
 		},
         logout: function () {
-			//删除本地token
-            localStorage.removeItem("token");
-            //跳转到登录页面
-            location.href = baseURL + 'login.html';
+            $.ajax({
+                type: "POST",
+                url: baseURL + "sys/logout",
+                dataType: "json",
+                success: function(r){
+                    //删除本地token
+                    localStorage.removeItem("token");
+                    //跳转到登录页面
+                    location.href = baseURL + 'login.html';
+                }
+            });
         },
         donate: function () {
             layer.open({
@@ -126,6 +136,7 @@ function routerList(router, menuList){
 			    
 			    //导航菜单展开
 			    $(".treeview-menu li").removeClass("active");
+                $(".sidebar-menu li").removeClass("active");
 			    $("a[href='"+url+"']").parents("li").addClass("active");
 			    
 			    vm.navTitle = $("a[href='"+url+"']").text();

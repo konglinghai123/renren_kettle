@@ -30,14 +30,13 @@ import java.util.Map;
  * @date 2016年11月10日 下午1:15:31
  */
 @RestController
-public class SysLoginController {
+public class SysLoginController extends AbstractController {
 	@Autowired
 	private Producer producer;
 	@Autowired
 	private SysUserService sysUserService;
 	@Autowired
 	private SysUserTokenService sysUserTokenService;
-
 
 	@RequestMapping("captcha.jpg")
 	public void captcha(HttpServletResponse response)throws ServletException, IOException {
@@ -82,6 +81,15 @@ public class SysLoginController {
 		//生成token，并保存到数据库
 		R r = sysUserTokenService.createToken(user.getUserId());
 		return r;
+	}
+
+	/**
+	 * 退出
+	 */
+	@RequestMapping(value = "/sys/logout", method = RequestMethod.POST)
+	public R logout() {
+		sysUserTokenService.logout(getUserId());
+		return R.ok();
 	}
 	
 }

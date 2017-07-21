@@ -21,9 +21,7 @@ public interface SysLogService {
 	int queryTotal(Map<String, Object> map);
 	
 	void save(SysLogEntity sysLog);
-	
-	void update(SysLogEntity sysLog);
-	
+
 	void delete(Long id);
 	
 	void deleteBatch(Long[] ids);

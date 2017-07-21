@@ -1,10 +1,11 @@
 package io.renren.modules.sys.service.impl;
 
 import com.google.gson.Gson;
+import io.renren.common.exception.RRException;
 import io.renren.modules.sys.dao.SysConfigDao;
 import io.renren.modules.sys.entity.SysConfigEntity;
+import io.renren.modules.sys.redis.SysConfigRedis;
 import io.renren.modules.sys.service.SysConfigService;
-import io.renren.common.exception.RRException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,26 +18,39 @@ import java.util.Map;
 public class SysConfigServiceImpl implements SysConfigService {
 	@Autowired
 	private SysConfigDao sysConfigDao;
+	@Autowired
+	private SysConfigRedis sysConfigRedis;
 	
 	@Override
 	@Transactional
 	public void save(SysConfigEntity config) {
 		sysConfigDao.save(config);
+		sysConfigRedis.saveOrUpdate(config);
 	}
 
 	@Override
+	@Transactional
 	public void update(SysConfigEntity config) {
 		sysConfigDao.update(config);
+		sysConfigRedis.saveOrUpdate(config);
 	}
 
 	@Override
+	@Transactional
 	public void updateValueByKey(String key, String value) {
 		sysConfigDao.updateValueByKey(key, value);
+		sysConfigRedis.delete(key);
 	}
 
 	@Override
+	@Transactional
 	public void deleteBatch(Long[] ids) {
 		sysConfigDao.deleteBatch(ids);
+
+		for(Long id : ids){
+			SysConfigEntity config = queryObject(id);
+			sysConfigRedis.delete(config.getKey());
+		}
 	}
 
 	@Override
@@ -55,17 +69,19 @@ public class SysConfigServiceImpl implements SysConfigService {
 	}
 
 	@Override
-	public String getValue(String key, String defaultValue) {
-		String value = sysConfigDao.queryByKey(key);
-		if(StringUtils.isBlank(value)){
-			return defaultValue;
+	public String getValue(String key) {
+		SysConfigEntity config = sysConfigRedis.get(key);
+		if(config == null){
+			config = sysConfigDao.queryByKey(key);
+			sysConfigRedis.saveOrUpdate(config);
 		}
-		return value;
+
+		return config == null ? null : config.getValue();
 	}
 	
 	@Override
 	public <T> T getConfigObject(String key, Class<T> clazz) {
-		String value = getValue(key, null);
+		String value = getValue(key);
 		if(StringUtils.isNotBlank(value)){
 			return new Gson().fromJson(value, clazz);
 		}

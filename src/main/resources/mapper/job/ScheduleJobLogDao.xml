@@ -9,7 +9,7 @@
 	<select id="queryList" resultType="io.renren.modules.job.entity.ScheduleJobLogEntity" >
 		select * from schedule_job_log 
 		<where>
-			<if test="jobId != null">
+			<if test="jobId != null and jobId.trim() != ''">
 				and job_id = #{jobId}
 			</if>
 		</where>
@@ -22,7 +22,7 @@
  	<select id="queryTotal" resultType="int">
 		select count(1) from schedule_job_log 
 		<where>
-			<if test="jobId != null">
+			<if test="jobId != null and jobId.trim() != ''">
 				and job_id = #{jobId}
 			</if>
 		</where>

@@ -38,8 +38,8 @@
 	</update>
 	
 	<!-- 根据key，查询value -->
-	<select id="queryByKey" parameterType="string" resultType="string">
-		select value from sys_config where `key` = #{key}
+	<select id="queryByKey" parameterType="string" resultType="io.renren.modules.sys.entity.SysConfigEntity">
+		select * from sys_config where `key` = #{key}
 	</select>
 	
 	<delete id="deleteBatch" parameterType="int">

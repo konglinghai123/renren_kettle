@@ -23,6 +23,8 @@ public class SysLogEntity implements Serializable {
 	private String method;
 	//请求参数
 	private String params;
+	//执行时长(毫秒)
+	private Long time;
 	//IP地址
 	private String ip;
 	//创建时间
@@ -111,5 +113,13 @@ public class SysLogEntity implements Serializable {
 	 */
 	public Date getCreateDate() {
 		return createDate;
+	}
+
+	public Long getTime() {
+		return time;
+	}
+
+	public void setTime(Long time) {
+		this.time = time;
 	}
 }

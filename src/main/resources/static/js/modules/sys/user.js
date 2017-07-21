@@ -106,6 +106,10 @@ var vm = new Vue({
 			});
 		},
 		saveOrUpdate: function () {
+            if(vm.validator()){
+                return ;
+            }
+
 			var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
 			$.ajax({
 				type: "POST",
@@ -141,6 +145,27 @@ var vm = new Vue({
                 postData:{'username': vm.q.username},
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+        validator: function () {
+            if(isBlank(vm.user.username)){
+                alert("用户名不能为空");
+                return true;
+            }
+
+            if(vm.user.userId == null && isBlank(vm.user.password)){
+                alert("密码不能为空");
+                return true;
+            }
+
+            if(isBlank(vm.user.email)){
+                alert("邮箱不能为空");
+                return true;
+            }
+
+            if(!validator.isEmail(vm.user.email)){
+                alert("邮箱格式不正确");
+                return true;
+			}
+        }
 	}
 });

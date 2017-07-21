@@ -32,7 +32,7 @@ public class ShiroConfig {
     public SessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionValidationSchedulerEnabled(true);
-        sessionManager.setSessionIdUrlRewritingEnabled(false);
+        //sessionManager.setSessionIdUrlRewritingEnabled(false);
         //sessionManager.setSessionIdCookieEnabled(false);
         return sessionManager;
     }
@@ -60,18 +60,13 @@ public class ShiroConfig {
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/druid/**", "anon");
         filterMap.put("/api/**", "anon");
-
-        //swagger配置
-        filterMap.put("/swagger**", "anon");
-        filterMap.put("/v2/api-docs", "anon");
-        filterMap.put("/swagger-resources/configuration/ui", "anon");
-
         filterMap.put("/sys/login", "anon");
         filterMap.put("/**/*.css", "anon");
         filterMap.put("/**/*.js", "anon");
         filterMap.put("/**/*.html", "anon");
         filterMap.put("/fonts/**", "anon");
         filterMap.put("/plugins/**", "anon");
+        filterMap.put("/swagger/**", "anon");
         filterMap.put("/favicon.ico", "anon");
         filterMap.put("/captcha.jpg", "anon");
         filterMap.put("/", "anon");

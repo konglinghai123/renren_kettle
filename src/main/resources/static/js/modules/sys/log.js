@@ -7,7 +7,8 @@ $(function () {
 			{ label: '用户名', name: 'username', width: 50 }, 			
 			{ label: '用户操作', name: 'operation', width: 70 }, 			
 			{ label: '请求方法', name: 'method', width: 150 }, 			
-			{ label: '请求参数', name: 'params', width: 80 }, 			
+			{ label: '请求参数', name: 'params', width: 80 },
+            { label: '执行时长(毫秒)', name: 'time', width: 80 },
 			{ label: 'IP地址', name: 'ip', width: 70 }, 			
 			{ label: '创建时间', name: 'createDate', width: 90 }			
         ],
