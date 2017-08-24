@@ -5,9 +5,9 @@ server:
         max-threads: 1000
         min-spare-threads: 30
     port: 80
-    #servlet-path: /renren-fast
+    #打开注释，则通过【http://localhost/renren-fast】访问
+    #context-path: /renren-fast
 
-# mysql
 spring:
     # 环境 dev|test|pro
     profiles:
