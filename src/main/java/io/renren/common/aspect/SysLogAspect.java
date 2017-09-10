@@ -92,6 +92,4 @@ public class SysLogAspect {
 		//保存系统日志
 		sysLogService.save(sysLog);
 	}
-
-	
 }

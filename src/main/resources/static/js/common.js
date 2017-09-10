@@ -18,9 +18,7 @@ var url = function(name) {
 T.p = url;
 
 //请求前缀
-//var baseURL = "http://www.juziku.com/";
-//var baseURL = "/renren-fast/";
-var baseURL = "/";
+var baseURL = "/renren-fast/";
 
 //登录token
 var token = localStorage.getItem("token");

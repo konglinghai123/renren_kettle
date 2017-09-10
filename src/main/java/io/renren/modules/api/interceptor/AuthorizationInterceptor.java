@@ -36,7 +36,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        //如果有@IgnoreAuth注解，则不验证token
+        //如果有@AuthIgnore注解，则不验证token
         if(annotation != null){
             return true;
         }

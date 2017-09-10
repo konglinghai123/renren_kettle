@@ -24,7 +24,8 @@ public class TestTask {
 	
 	@Autowired
 	private SysUserService sysUserService;
-	
+
+	//定时任务只能接受一个参数；如果有多个参数，使用json数据即可
 	public void test(String params){
 		logger.info("我是带参数的test方法，正在被执行，参数为：" + params);
 		

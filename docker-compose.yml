@@ -1,0 +1,6 @@
+version: '2'
+services:
+  campus:
+    image: renren/fast
+    ports:
+      - "80:80"
