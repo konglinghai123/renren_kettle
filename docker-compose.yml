@@ -1,6 +1,8 @@
 version: '2'
 services:
-  campus:
+  renren-fast:
     image: renren/fast
     ports:
-      - "80:80"
+      - "8080:8080"
+    environment:
+      - spring.profiles.active=dev

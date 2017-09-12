@@ -200,6 +200,7 @@
 					<displayCommandOutputs>true</displayCommandOutputs>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
@@ -215,14 +216,15 @@
 				<configuration>
 					<imageName>renren/fast</imageName>
 					<dockerDirectory>${project.basedir}</dockerDirectory>
-					<!--<resources>-->
-						<!--<resource>-->
-							<!--<targetPath>/</targetPath>-->
-							<!--<directory>${project.build.directory}</directory>-->
-							<!--<include>${project.build.finalName}.jar</include>-->
-						<!--</resource>-->
-					<!--</resources>-->
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
 				</configuration>
+				<!-- 运行命令 mvn clean package docker:build 打包并生成docker镜像 -->
 			</plugin>
 		</plugins>
 	</build>

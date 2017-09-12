@@ -4,7 +4,8 @@ server:
         uri-encoding: UTF-8
         max-threads: 1000
         min-spare-threads: 30
-    port: 80
+    port: 8080
+    connection-timeout: 5000
     context-path: /renren-fast
 
 spring:
