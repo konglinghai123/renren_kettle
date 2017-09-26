@@ -84,7 +84,7 @@ var vm = new Vue({
             vm.title = "修改";
             vm.getMenuTree(roleId);
 		},
-		del: function (event) {
+		del: function () {
 			var roleIds = getSelectedRows();
 			if(roleIds == null){
 				return ;

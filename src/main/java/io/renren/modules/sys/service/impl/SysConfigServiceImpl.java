@@ -45,12 +45,12 @@ public class SysConfigServiceImpl implements SysConfigService {
 	@Override
 	@Transactional
 	public void deleteBatch(Long[] ids) {
-		sysConfigDao.deleteBatch(ids);
-
 		for(Long id : ids){
 			SysConfigEntity config = queryObject(id);
 			sysConfigRedis.delete(config.getKey());
 		}
+
+		sysConfigDao.deleteBatch(ids);
 	}
 
 	@Override

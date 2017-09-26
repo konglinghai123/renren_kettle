@@ -26,7 +26,7 @@ var vm = new Vue({
         }
     },
     methods: {
-        getMenu: function(menuId){
+        getMenu: function(){
             //加载菜单树
             $.get(baseURL + "sys/menu/select", function(r){
                 ztree = $.fn.zTree.init($("#menuTree"), setting, r.menuList);

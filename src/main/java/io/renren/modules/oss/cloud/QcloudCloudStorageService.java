@@ -2,15 +2,15 @@ package io.renren.modules.oss.cloud;
 
 
 import com.qcloud.cos.COSClient;
-        import com.qcloud.cos.ClientConfig;
-        import com.qcloud.cos.request.UploadFileRequest;
-        import com.qcloud.cos.sign.Credentials;
-        import io.renren.common.exception.RRException;
-        import net.sf.json.JSONObject;
-        import org.apache.commons.io.IOUtils;
+import com.qcloud.cos.ClientConfig;
+import com.qcloud.cos.request.UploadFileRequest;
+import com.qcloud.cos.sign.Credentials;
+import io.renren.common.exception.RRException;
+import net.sf.json.JSONObject;
+import org.apache.commons.io.IOUtils;
 
-        import java.io.IOException;
-        import java.io.InputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 腾讯云存储
@@ -18,7 +18,7 @@ import com.qcloud.cos.COSClient;
  * @email sunlightcs@gmail.com
  * @date 2017-03-26 20:51
  */
-public class QcloudCloudStorageService extends CloudStorageService{
+public class QcloudCloudStorageService extends CloudStorageService {
     private COSClient client;
 
     public QcloudCloudStorageService(CloudStorageConfig config){
@@ -29,15 +29,15 @@ public class QcloudCloudStorageService extends CloudStorageService{
     }
 
     private void init(){
-        Credentials credentials = new Credentials(config.getQcloudAppId(), config.getQcloudSecretId(),
+    	Credentials credentials = new Credentials(config.getQcloudAppId(), config.getQcloudSecretId(),
                 config.getQcloudSecretKey());
-
-        //初始化客户端配置
+    	
+    	//初始化客户端配置
         ClientConfig clientConfig = new ClientConfig();
         //设置bucket所在的区域，华南：gz 华北：tj 华东：sh
         clientConfig.setRegion(config.getQcloudRegion());
-
-        client = new COSClient(clientConfig, credentials);
+        
+    	client = new COSClient(clientConfig, credentials);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class QcloudCloudStorageService extends CloudStorageService{
         if(!path.startsWith("/")) {
             path = "/" + path;
         }
-
+        
         //上传到腾讯云
         UploadFileRequest request = new UploadFileRequest(config.getQcloudBucketName(), path, data);
         String response = client.uploadFile(request);
@@ -61,7 +61,7 @@ public class QcloudCloudStorageService extends CloudStorageService{
 
     @Override
     public String upload(InputStream inputStream, String path) {
-        try {
+    	try {
             byte[] data = IOUtils.toByteArray(inputStream);
             return this.upload(data, path);
         } catch (IOException e) {
@@ -70,12 +70,12 @@ public class QcloudCloudStorageService extends CloudStorageService{
     }
 
     @Override
-    public String upload(byte[] data) {
-        return upload(data, getPath(config.getQcloudPrefix()));
+    public String uploadSuffix(byte[] data, String suffix) {
+        return upload(data, getPath(config.getQcloudPrefix(), suffix));
     }
 
     @Override
-    public String upload(InputStream inputStream) {
-        return upload(inputStream, getPath(config.getQcloudPrefix()));
+    public String uploadSuffix(InputStream inputStream, String suffix) {
+        return upload(inputStream, getPath(config.getQcloudPrefix(), suffix));
     }
 }

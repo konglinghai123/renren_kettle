@@ -59,7 +59,7 @@ public class ScheduleUtils {
 
             //放入参数，运行时的方法可以获取
             jobDetail.getJobDataMap().put(ScheduleJobEntity.JOB_PARAM_KEY, new Gson().toJson(scheduleJob));
-            
+
             scheduler.scheduleJob(jobDetail, trigger);
             
             //暂停任务

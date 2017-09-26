@@ -20,9 +20,10 @@ public abstract class CloudStorageService {
     /**
      * 文件路径
      * @param prefix 前缀
+     * @param suffix 后缀
      * @return 返回上传路径
      */
-    public String getPath(String prefix) {
+    public String getPath(String prefix, String suffix) {
         //生成uuid
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         //文件路径
@@ -32,7 +33,7 @@ public abstract class CloudStorageService {
             path = prefix + "/" + path;
         }
 
-        return path;
+        return path + suffix;
     }
 
     /**
@@ -45,10 +46,11 @@ public abstract class CloudStorageService {
 
     /**
      * 文件上传
-     * @param data    文件字节数组
-     * @return        返回http地址
+     * @param data     文件字节数组
+     * @param suffix   后缀
+     * @return         返回http地址
      */
-    public abstract String upload(byte[] data);
+    public abstract String uploadSuffix(byte[] data, String suffix);
 
     /**
      * 文件上传
@@ -61,8 +63,9 @@ public abstract class CloudStorageService {
     /**
      * 文件上传
      * @param inputStream  字节流
+     * @param suffix       后缀
      * @return             返回http地址
      */
-    public abstract String upload(InputStream inputStream);
+    public abstract String uploadSuffix(InputStream inputStream, String suffix);
 
 }

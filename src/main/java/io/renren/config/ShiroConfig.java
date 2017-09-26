@@ -32,7 +32,7 @@ public class ShiroConfig {
     public SessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionValidationSchedulerEnabled(true);
-        sessionManager.setSessionIdCookieEnabled(false);
+        sessionManager.setSessionIdCookieEnabled(true);
         return sessionManager;
     }
 
@@ -58,7 +58,7 @@ public class ShiroConfig {
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/druid/**", "anon");
-        filterMap.put("/api/**", "anon");
+        filterMap.put("/app/**", "anon");
         filterMap.put("/sys/login", "anon");
         filterMap.put("/**/*.css", "anon");
         filterMap.put("/**/*.js", "anon");
@@ -67,6 +67,7 @@ public class ShiroConfig {
         filterMap.put("/plugins/**", "anon");
         filterMap.put("/swagger/**", "anon");
         filterMap.put("/favicon.ico", "anon");
+        filterMap.put("/captcha.jpg", "anon");
         filterMap.put("/", "anon");
         filterMap.put("/**", "oauth2");
         shiroFilter.setFilterChainDefinitionMap(filterMap);

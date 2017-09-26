@@ -2,16 +2,16 @@ package io.renren.modules.oss.controller;
 
 import com.google.gson.Gson;
 import io.renren.common.exception.RRException;
-import io.renren.modules.oss.entity.SysOssEntity;
-import io.renren.modules.sys.service.SysConfigService;
-import io.renren.modules.oss.service.SysOssService;
 import io.renren.common.utils.*;
-import io.renren.modules.oss.cloud.CloudStorageConfig;
-import io.renren.modules.oss.cloud.OSSFactory;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.common.validator.group.AliyunGroup;
 import io.renren.common.validator.group.QcloudGroup;
 import io.renren.common.validator.group.QiniuGroup;
+import io.renren.modules.oss.cloud.CloudStorageConfig;
+import io.renren.modules.oss.cloud.OSSFactory;
+import io.renren.modules.oss.entity.SysOssEntity;
+import io.renren.modules.oss.service.SysOssService;
+import io.renren.modules.sys.service.SysConfigService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 
 
 /**
@@ -110,7 +109,8 @@ public class SysOssController {
 		}
 
 		//上传文件
-		String url = OSSFactory.build().upload(file.getBytes());
+		String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+		String url = OSSFactory.build().uploadSuffix(file.getBytes(), suffix);
 
 		//保存文件信息
 		SysOssEntity ossEntity = new SysOssEntity();

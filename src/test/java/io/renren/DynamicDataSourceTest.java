@@ -1,9 +1,8 @@
 package io.renren;
 
-import io.renren.dynamicdatasource.DataSourceContext;
-import io.renren.dynamicdatasource.DynamicDataSource;
-import io.renren.modules.api.entity.UserEntity;
-import io.renren.modules.api.service.UserService;
+
+import io.renren.datasources.DataSourceTestService;
+import io.renren.modules.app.entity.UserEntity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,16 +15,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class DynamicDataSourceTest {
     @Autowired
-    private UserService userService;
+    private DataSourceTestService dataSourceTestService;
 
     @Test
     public void test(){
-        UserEntity user = userService.queryObject(1L);
+        //数据源1
+        UserEntity user = dataSourceTestService.queryObject(1L);
         System.out.println(ToStringBuilder.reflectionToString(user));
 
-        //切换数据源
-        DynamicDataSource.setDataSource(DataSourceContext.SECOND.getName());
-        UserEntity user2 = userService.queryObject(1L);
+        //数据源2
+        UserEntity user2 = dataSourceTestService.queryObject2(1L);
         System.out.println(ToStringBuilder.reflectionToString(user2));
+
+        //数据源1
+        UserEntity user3 = dataSourceTestService.queryObject(1L);
+        System.out.println(ToStringBuilder.reflectionToString(user3));
     }
+
 }

@@ -26,7 +26,7 @@ spring:
     redis:
         open: false  # 是否开启redis缓存  true开启   false关闭
         database: 0
-        host: redis.open.renren.io
+        host: localhost
         port: 16379
         password:       # 密码（默认为空）
         timeout: 6000  # 连接超时时长（毫秒）
@@ -40,4 +40,13 @@ spring:
 mybatis:
     mapperLocations: classpath:mapper/**/*.xml
     configLocation: classpath:mybatis.xml
+
+renren:
+    # APP模块，是通过jwt认证的，如果要使用APP模块，则需要修改【加密秘钥】
+    jwt:
+        # 加密秘钥
+        secret: f4e2e52034348f86b67cde581c0f9eb5[www.renren.io]
+        # token有效时长，7天，单位秒
+        expire: 604800
+        header: token
 
