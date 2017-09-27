@@ -1,7 +1,7 @@
 package io.renren.modules.app.controller;
 
 
-import io.renren.common.utils.JwtUtils;
+import io.renren.modules.app.utils.JwtUtils;
 import io.renren.common.utils.R;
 import io.renren.common.validator.Assert;
 import io.renren.modules.app.service.UserService;

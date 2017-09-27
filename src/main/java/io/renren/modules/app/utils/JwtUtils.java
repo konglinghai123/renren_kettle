@@ -1,4 +1,4 @@
-package io.renren.common.utils;
+package io.renren.modules.app.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

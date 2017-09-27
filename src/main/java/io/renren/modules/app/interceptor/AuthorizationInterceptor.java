@@ -3,7 +3,7 @@ package io.renren.modules.app.interceptor;
 
 import io.jsonwebtoken.Claims;
 import io.renren.common.exception.RRException;
-import io.renren.common.utils.JwtUtils;
+import io.renren.modules.app.utils.JwtUtils;
 import io.renren.modules.app.annotation.Login;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

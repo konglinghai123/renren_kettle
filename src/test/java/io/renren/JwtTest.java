@@ -1,6 +1,6 @@
 package io.renren;
 
-import io.renren.common.utils.JwtUtils;
+import io.renren.modules.app.utils.JwtUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
