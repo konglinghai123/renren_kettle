@@ -4,6 +4,8 @@ info:
   version: 1.0.0
   title: 人人快速开发平台
 
+basePath: /renren-fast
+
 schemes:
   - http
 
