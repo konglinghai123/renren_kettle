@@ -1,10 +1,12 @@
 package io.renren.modules.app.controller;
 
 
-import io.renren.modules.app.utils.JwtUtils;
 import io.renren.common.utils.R;
 import io.renren.common.validator.Assert;
 import io.renren.modules.app.service.UserService;
+import io.renren.modules.app.utils.JwtUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/app")
+@Api("APP登录接口")
 public class ApiLoginController {
     @Autowired
     private UserService userService;
@@ -32,6 +35,7 @@ public class ApiLoginController {
      * 登录
      */
     @PostMapping("login")
+    @ApiOperation("登录")
     public R login(String mobile, String password){
         Assert.isBlank(mobile, "手机号不能为空");
         Assert.isBlank(password, "密码不能为空");

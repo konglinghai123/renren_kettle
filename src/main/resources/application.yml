@@ -39,7 +39,8 @@ spring:
 # Mybatis配置
 mybatis:
     mapperLocations: classpath:mapper/**/*.xml
-    configLocation: classpath:mybatis.xml
+    configuration:
+        map-underscore-to-camel-case: true
 
 renren:
     # APP模块，是通过jwt认证的，如果要使用APP模块，则需要修改【加密秘钥】
