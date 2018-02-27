@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.kettle.sys.log.dao.JobLogDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.kettle.sys.log.entity.JobLogEntity" id="jobLogMap">
+        <result property="oid" column="OID"/>
+        <result property="ocode" column="OCODE"/>
+        <result property="oname" column="ONAME"/>
+        <result property="odescribe" column="ODESCRIBE"/>
+        <result property="oorder" column="OORDER"/>
+        <result property="simpleSpell" column="SIMPLE_SPELL"/>
+        <result property="fullSpell" column="FULL_SPELL"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="updateDate" column="UPDATE_DATE"/>
+        <result property="createUser" column="CREATE_USER"/>
+        <result property="updateUser" column="UPDATE_USER"/>
+        <result property="expand" column="EXPAND"/>
+        <result property="isDisable" column="IS_DISABLE"/>
+        <result property="flag1" column="FLAG1"/>
+        <result property="flag2" column="FLAG2"/>
+        <result property="idJob" column="ID_JOB"/>
+        <result property="jobName" column="JOB_NAME"/>
+        <result property="startDate" column="START_DATE"/>
+        <result property="endDate" column="END_DATE"/>
+        <result property="result" column="RESULT"/>
+        <result property="logFile" column="LOG_FILE"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.renren.modules.kettle.sys.log.entity.JobLogEntity">
+		select * from job_log where OID = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.renren.modules.kettle.sys.log.entity.JobLogEntity">
+		select * from job_log
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by OID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from job_log 
+	</select>
+	 
+	<insert id="save" parameterType="io.renren.modules.kettle.sys.log.entity.JobLogEntity">
+		insert into job_log
+		(
+			`OID`, 
+			`OCODE`, 
+			`ONAME`, 
+			`ODESCRIBE`, 
+			`OORDER`, 
+			`SIMPLE_SPELL`, 
+			`FULL_SPELL`, 
+			`CREATE_DATE`, 
+			`UPDATE_DATE`, 
+			`CREATE_USER`, 
+			`UPDATE_USER`, 
+			`EXPAND`, 
+			`IS_DISABLE`, 
+			`FLAG1`, 
+			`FLAG2`, 
+			`ID_JOB`, 
+			`JOB_NAME`, 
+			`START_DATE`, 
+			`END_DATE`, 
+			`RESULT`, 
+			`LOG_FILE`
+		)
+		values
+		(
+			#{oid}, 
+			#{ocode}, 
+			#{oname}, 
+			#{odescribe}, 
+			#{oorder}, 
+			#{simpleSpell}, 
+			#{fullSpell}, 
+			#{createDate}, 
+			#{updateDate}, 
+			#{createUser}, 
+			#{updateUser}, 
+			#{expand}, 
+			#{isDisable}, 
+			#{flag1}, 
+			#{flag2}, 
+			#{idJob}, 
+			#{jobName}, 
+			#{startDate}, 
+			#{endDate}, 
+			#{result}, 
+			#{logFile}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.renren.modules.kettle.sys.log.entity.JobLogEntity">
+		update job_log 
+		<set>
+			<if test="ocode != null">`OCODE` = #{ocode}, </if>
+			<if test="oname != null">`ONAME` = #{oname}, </if>
+			<if test="odescribe != null">`ODESCRIBE` = #{odescribe}, </if>
+			<if test="oorder != null">`OORDER` = #{oorder}, </if>
+			<if test="simpleSpell != null">`SIMPLE_SPELL` = #{simpleSpell}, </if>
+			<if test="fullSpell != null">`FULL_SPELL` = #{fullSpell}, </if>
+			<if test="createDate != null">`CREATE_DATE` = #{createDate}, </if>
+			<if test="updateDate != null">`UPDATE_DATE` = #{updateDate}, </if>
+			<if test="createUser != null">`CREATE_USER` = #{createUser}, </if>
+			<if test="updateUser != null">`UPDATE_USER` = #{updateUser}, </if>
+			<if test="expand != null">`EXPAND` = #{expand}, </if>
+			<if test="isDisable != null">`IS_DISABLE` = #{isDisable}, </if>
+			<if test="flag1 != null">`FLAG1` = #{flag1}, </if>
+			<if test="flag2 != null">`FLAG2` = #{flag2}, </if>
+			<if test="idJob != null">`ID_JOB` = #{idJob}, </if>
+			<if test="jobName != null">`JOB_NAME` = #{jobName}, </if>
+			<if test="startDate != null">`START_DATE` = #{startDate}, </if>
+			<if test="endDate != null">`END_DATE` = #{endDate}, </if>
+			<if test="result != null">`RESULT` = #{result}, </if>
+			<if test="logFile != null">`LOG_FILE` = #{logFile}</if>
+		</set>
+		where OID = #{oid}
+	</update>
+	
+	<delete id="delete">
+		delete from job_log where OID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from job_log where OID in 
+		<foreach item="oid" collection="array" open="(" separator="," close=")">
+			#{oid}
+		</foreach>
+	</delete>
+
+</mapper>

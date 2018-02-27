@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.kettle.sys.job.dao.VJobDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.kettle.sys.job.entity.VJobEntity" id="vJobMap">
+        <result property="idJob" column="id_job"/>
+        <result property="idDirectory" column="id_directory"/>
+        <result property="timing" column="timing"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="extendedDescription" column="extended_description"/>
+        <result property="jobVersion" column="job_version"/>
+        <result property="jobStatus" column="job_status"/>
+        <result property="idDatabaseLog" column="id_database_log"/>
+        <result property="tableNameLog" column="table_name_log"/>
+        <result property="createdUser" column="created_user"/>
+        <result property="createdDate" column="created_date"/>
+        <result property="modifiedUser" column="modified_user"/>
+        <result property="modifiedDate" column="modified_date"/>
+        <result property="useBatchId" column="use_batch_id"/>
+        <result property="passBatchId" column="pass_batch_id"/>
+        <result property="useLogfield" column="use_logfield"/>
+        <result property="sharedFile" column="shared_file"/>
+        <result property="runStatus" column="run_status"/>
+        <result property="lastUpdate" column="last_update"/>
+        <result property="autoRestartNum" column="auto_restart_num"/>
+        <result property="repositoryCode" column="repository_code"/>
+        <result property="projectCode" column="project_code"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.renren.modules.kettle.sys.job.entity.VJobEntity">
+		select * from v_job where id_job = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.renren.modules.kettle.sys.job.entity.VJobEntity">
+		select * from v_job
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id_job desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from v_job 
+	</select>
+	 
+	<insert id="save" parameterType="io.renren.modules.kettle.sys.job.entity.VJobEntity">
+		insert into v_job
+		(
+			`id_job`, 
+			`id_directory`, 
+			`timing`, 
+			`name`, 
+			`description`, 
+			`extended_description`, 
+			`job_version`, 
+			`job_status`, 
+			`id_database_log`, 
+			`table_name_log`, 
+			`created_user`, 
+			`created_date`, 
+			`modified_user`, 
+			`modified_date`, 
+			`use_batch_id`, 
+			`pass_batch_id`, 
+			`use_logfield`, 
+			`shared_file`, 
+			`run_status`, 
+			`last_update`, 
+			`auto_restart_num`, 
+			`repository_code`, 
+			`project_code`
+		)
+		values
+		(
+			#{idJob}, 
+			#{idDirectory}, 
+			#{timing}, 
+			#{name}, 
+			#{description}, 
+			#{extendedDescription}, 
+			#{jobVersion}, 
+			#{jobStatus}, 
+			#{idDatabaseLog}, 
+			#{tableNameLog}, 
+			#{createdUser}, 
+			#{createdDate}, 
+			#{modifiedUser}, 
+			#{modifiedDate}, 
+			#{useBatchId}, 
+			#{passBatchId}, 
+			#{useLogfield}, 
+			#{sharedFile}, 
+			#{runStatus}, 
+			#{lastUpdate}, 
+			#{autoRestartNum}, 
+			#{repositoryCode}, 
+			#{projectCode}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.renren.modules.kettle.sys.job.entity.VJobEntity">
+		update v_job 
+		<set>
+			<if test="idDirectory != null">`id_directory` = #{idDirectory}, </if>
+			<if test="timing != null">`timing` = #{timing}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="description != null">`description` = #{description}, </if>
+			<if test="extendedDescription != null">`extended_description` = #{extendedDescription}, </if>
+			<if test="jobVersion != null">`job_version` = #{jobVersion}, </if>
+			<if test="jobStatus != null">`job_status` = #{jobStatus}, </if>
+			<if test="idDatabaseLog != null">`id_database_log` = #{idDatabaseLog}, </if>
+			<if test="tableNameLog != null">`table_name_log` = #{tableNameLog}, </if>
+			<if test="createdUser != null">`created_user` = #{createdUser}, </if>
+			<if test="createdDate != null">`created_date` = #{createdDate}, </if>
+			<if test="modifiedUser != null">`modified_user` = #{modifiedUser}, </if>
+			<if test="modifiedDate != null">`modified_date` = #{modifiedDate}, </if>
+			<if test="useBatchId != null">`use_batch_id` = #{useBatchId}, </if>
+			<if test="passBatchId != null">`pass_batch_id` = #{passBatchId}, </if>
+			<if test="useLogfield != null">`use_logfield` = #{useLogfield}, </if>
+			<if test="sharedFile != null">`shared_file` = #{sharedFile}, </if>
+			<if test="runStatus != null">`run_status` = #{runStatus}, </if>
+			<if test="lastUpdate != null">`last_update` = #{lastUpdate}, </if>
+			<if test="autoRestartNum != null">`auto_restart_num` = #{autoRestartNum}, </if>
+			<if test="repositoryCode != null">`repository_code` = #{repositoryCode}, </if>
+			<if test="projectCode != null">`project_code` = #{projectCode}</if>
+		</set>
+		where id_job = #{idJob}
+	</update>
+	
+	<delete id="delete">
+		delete from v_job where id_job = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from v_job where id_job in 
+		<foreach item="idJob" collection="array" open="(" separator="," close=")">
+			#{idJob}
+		</foreach>
+	</delete>
+
+</mapper>

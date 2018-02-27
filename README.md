@@ -1,21 +1,13 @@
 **项目说明** 
-- renren-fast是一个轻量级的Java快速开发平台，能快速开发项目并交付【接私活利器】
-<br> 
- 
+- renren_kettle是修改了kettle-manager的源码的项目，由于马老师的项目基于EVOA，不便于系统的集成，所以将部分重要功能转接到spring-boot，
+具体操作kettle的sql仍然是beetl的，具体的代码带 kettle 这个模块，而其他业务代码你可以选择mybatis去实现。
+- renren_kettle是搭建在renren_fast的基础上的，这个框架如何使用，请看这个开源项目的文档
+<br>
 
-
-**具有如下特点** 
-- 友好的代码结构及注释，便于阅读及二次开发
-- 实现前后端分离，通过token进行数据交互，前端再也不用关注后端技术
-- 灵活的权限控制，可控制到页面或按钮，满足绝大部分的权限需求
-- 页面交互使用Vue2.x，极大的提高了开发效率
-- 完善的代码生成机制，可在线生成entity、xml、dao、service、html、js、sql代码，减少70%以上的开发任务
-- 引入quartz定时任务，可动态完成任务的添加、修改、删除、暂停、恢复及日志查看等功能
-- 引入API模板，根据token作为登录令牌，极大的方便了APP接口开发
-- 引入Hibernate Validator校验框架，轻松实现后端校验
-- 引入云存储服务，已支持：七牛云、阿里云、腾讯云等
-- 引入swagger文档支持，方便编写API接口文档
-- 引入路由机制，刷新页面会停留在当前页
+**项目实现功能**
+- 作业的列表（非实时），启动，停止，终结，删除，结束 （VJobController）
+- 基于websocket的实时日志 （KettleLogListener）
+- 前端代码,忙着找工作,没有实现，请各位自行完善
 <br> 
 
 **项目结构** 
@@ -23,6 +15,7 @@
 renren-fast
 ├─doc  项目SQL语句
 │
+├─kettle 马老师的 kettle api调用都在这里
 ├─common 公共模块
 │  ├─aspect 系统日志
 │  ├─exception 异常处理
@@ -34,6 +27,7 @@ renren-fast
 ├─modules 功能模块
 │  ├─api API接口模块(APP调用)
 │  ├─job 定时任务模块
+│  ├─kettle kettle相关的业务
 │  ├─oss 文件服务模块
 │  └─sys 权限模块
 │ 
@@ -47,54 +41,72 @@ renren-fast
 ```
 <br> 
 
-**如何交流、反馈、参与贡献？** 
-- 开发文档：http://www.renren.io/open/renren-fast/
-- Git仓库：http://git.oschina.net/babaio/renren-fast
-- 其他项目：http://www.renren.io/open/
-- [编程入门教程](http://www.renren.io)：http://www.renren.io   
-- 官方QQ群：324780204、145799952
-- 如需关注项目最新动态，请Watch、Star项目，同时也是对项目最好的支持
-<br> 
+**实时websocket的接入例子**
+```
+<script type="text/javascript">
+    var websocket = null;
+    $(document).ready(function(){
+        //判断当前浏览器是否支持WebSocket
+        if('WebSocket' in window){
+            //${path} 是jsp的标签
+            websocket = new WebSocket("ws://${path}/kettle/log");
+        }
+        else{
+            alert('Not support websocket')
+        }
+        //连接发生错误的回调方法
+        websocket.onerror = function(){
+            setMessageInnerHTML("error");
+        };
 
+        //连接成功建立的回调方法
+        websocket.onopen = function(event){
+            var message = $("#jobId").val()+"-"+"open";
+            websocket.send(message);
 
-**技术选型：** 
-- 核心框架：Spring Boot 1.5
-- 安全框架：Apache Shiro 1.3
-- 视图框架：Spring MVC 4.3
-- 持久层框架：MyBatis 3.3
-- 定时器：Quartz 2.3
-- 数据库连接池：Druid 1.0
-- 日志管理：SLF4J 1.7、Log4j
-- 页面交互：Vue2.x 
-<br> 
+        }
 
+        //接收到消息的回调方法
+        websocket.onmessage = function(event){
+            setMessageInnerHTML(event.data);
+        }
 
- **本地部署**
-- 通过git下载源码
-- 创建数据库renren_fast，数据库编码为UTF-8
-- 执行doc/db.sql文件，初始化数据
-- 修改application-dev.yml，更新MySQL账号和密码
-- Eclipse、IDEA运行RenrenApplication.java，则可启动项目
-- 项目访问路径：http://localhost:8080/renren-fast
-- 账号密码：admin/admin
-- Swagger路径：http://localhost:8080/renren-fast/swagger/index.html
+        //连接关闭的回调方法
+        websocket.onclose = function(){
+            closeWebSocket();
+        }
 
+        //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+        window.onbeforeunload = function(){
+            websocket.close();
+        }
 
- **项目演示**
-- 演示地址：http://demo.open.renren.io/renren-fast
-- 账号密码：admin/admin
-<br> 
+    });
 
-**接口文档效果图：**
-![输入图片说明](http://cdn.renren.io/img/6e8d7575fb8240d49b949dc0f02547bc "在这里输入图片标题")
-<br> <br> <br> 
+    //关闭连接
+    function closeWebSocket(){
+        websocket.close();
+    }
 
-**演示效果图：**
-![输入图片说明](http://cdn.renren.io/img/4f15a5513e4e4a00a07294e87c548982 "在这里输入图片标题")
-![输入图片说明](http://cdn.renren.io/img/9b0c60dfe7ee48fb87bb933e31ebf36f "在这里输入图片标题")
-![输入图片说明](http://cdn.renren.io/img/f59b6f61c36f49e1851a5bf3e91a1e5b "在这里输入图片标题")
-![输入图片说明](http://cdn.renren.io/img/c3fe6c2146dc450f95b5b85d0ad0325f "在这里输入图片标题")
-![输入图片说明](http://cdn.renren.io/img/069045e6c6d24d88b6c2827a1b625da4 "在这里输入图片标题")
-![输入图片说明](http://cdn.renren.io/img/5d4d6c1acd5c4455930dc5dc7d88ad82 "在这里输入图片标题")
-![输入图片说明](http://cdn.renren.io/img/35dfe497ea7642028c7d6115a5a1c5e8 "在这里输入图片标题")
+    //将消息显示在网页上
+    function setMessageInnerHTML(innerHTML){
+        document.getElementById('message').innerHTML += innerHTML +"\r\n"+"***********************************************************************>"+"\r\n";
+    }
+
+    function removeAll() {
+        $("#message").html("");
+    }
+</script>
+```
+<br>
+
+**部署指南**
+- doc有2个数据库
+    kettle.sql （kettle 5.4的资源库），有一张表是自己加的，CrTask-定时任务表，这里面有一条固定的记录，用于定时获取kettle的日志，然后发到websocket。
+    renren_fast.sql （renren 开源项目的业务数据库）
+
+- kettle的配置文件  resources/kettle.properties
+
+- renren项目的配置都在application.yml
+
 

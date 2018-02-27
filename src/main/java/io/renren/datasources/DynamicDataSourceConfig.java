@@ -1,10 +1,12 @@
 package io.renren.datasources;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import java.util.Map;
 @Configuration
 public class DynamicDataSourceConfig {
 
+
     @Bean
     @ConfigurationProperties("spring.datasource.druid.first")
     public DataSource firstDataSource(){
@@ -30,6 +33,12 @@ public class DynamicDataSourceConfig {
     public DataSource secondDataSource(){
         return DruidDataSourceBuilder.create().build();
     }
+
+    @Bean(name = "kettleJdbcTemplate")
+    public JdbcTemplate kettleJdbcTemplate(@Qualifier("secondDataSource") DataSource kettleSource) {
+        return new JdbcTemplate(kettleSource);
+    }
+
 
     @Bean
     @Primary

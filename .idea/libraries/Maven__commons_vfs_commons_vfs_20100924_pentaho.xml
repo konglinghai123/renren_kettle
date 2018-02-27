@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: commons-vfs:commons-vfs:20100924-pentaho">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/commons-vfs/commons-vfs/20100924-pentaho/commons-vfs-20100924-pentaho.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/commons-vfs/commons-vfs/20100924-pentaho/commons-vfs-20100924-pentaho-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/commons-vfs/commons-vfs/20100924-pentaho/commons-vfs-20100924-pentaho-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

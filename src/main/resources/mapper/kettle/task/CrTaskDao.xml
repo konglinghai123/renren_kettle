@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.kettle.sys.task.dao.CrTaskDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.kettle.sys.task.entity.CrTaskEntity" id="crTaskMap">
+        <result property="id" column="ID"/>
+        <result property="state" column="STATE"/>
+        <result property="name" column="NAME"/>
+        <result property="exp" column="EXP"/>
+        <result property="javaClass" column="JAVA_CLASS"/>
+        <result property="info" column="INFO"/>
+        <result property="oid" column="OID"/>
+        <result property="ocode" column="OCODE"/>
+        <result property="oname" column="ONAME"/>
+        <result property="odescribe" column="ODESCRIBE"/>
+        <result property="oorder" column="OORDER"/>
+        <result property="simpleSpell" column="SIMPLE_SPELL"/>
+        <result property="fullSpell" column="FULL_SPELL"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="updateDate" column="UPDATE_DATE"/>
+        <result property="expand" column="EXPAND"/>
+        <result property="isDisable" column="IS_DISABLE"/>
+        <result property="configInfo" column="CONFIG_INFO"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.renren.modules.kettle.sys.task.entity.CrTaskEntity">
+		select * from cr_task where ID = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.renren.modules.kettle.sys.task.entity.CrTaskEntity">
+		select * from cr_task
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by ID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from cr_task 
+	</select>
+	 
+	<insert id="save" parameterType="io.renren.modules.kettle.sys.task.entity.CrTaskEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into cr_task
+		(
+			`STATE`, 
+			`NAME`, 
+			`EXP`, 
+			`JAVA_CLASS`, 
+			`INFO`, 
+			`OID`, 
+			`OCODE`, 
+			`ONAME`, 
+			`ODESCRIBE`, 
+			`OORDER`, 
+			`SIMPLE_SPELL`, 
+			`FULL_SPELL`, 
+			`CREATE_DATE`, 
+			`UPDATE_DATE`, 
+			`EXPAND`, 
+			`IS_DISABLE`, 
+			`CONFIG_INFO`
+		)
+		values
+		(
+			#{state}, 
+			#{name}, 
+			#{exp}, 
+			#{javaClass}, 
+			#{info}, 
+			#{oid}, 
+			#{ocode}, 
+			#{oname}, 
+			#{odescribe}, 
+			#{oorder}, 
+			#{simpleSpell}, 
+			#{fullSpell}, 
+			#{createDate}, 
+			#{updateDate}, 
+			#{expand}, 
+			#{isDisable}, 
+			#{configInfo}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.renren.modules.kettle.sys.task.entity.CrTaskEntity">
+		update cr_task 
+		<set>
+			<if test="state != null">`STATE` = #{state}, </if>
+			<if test="name != null">`NAME` = #{name}, </if>
+			<if test="exp != null">`EXP` = #{exp}, </if>
+			<if test="javaClass != null">`JAVA_CLASS` = #{javaClass}, </if>
+			<if test="info != null">`INFO` = #{info}, </if>
+			<if test="oid != null">`OID` = #{oid}, </if>
+			<if test="ocode != null">`OCODE` = #{ocode}, </if>
+			<if test="oname != null">`ONAME` = #{oname}, </if>
+			<if test="odescribe != null">`ODESCRIBE` = #{odescribe}, </if>
+			<if test="oorder != null">`OORDER` = #{oorder}, </if>
+			<if test="simpleSpell != null">`SIMPLE_SPELL` = #{simpleSpell}, </if>
+			<if test="fullSpell != null">`FULL_SPELL` = #{fullSpell}, </if>
+			<if test="createDate != null">`CREATE_DATE` = #{createDate}, </if>
+			<if test="updateDate != null">`UPDATE_DATE` = #{updateDate}, </if>
+			<if test="expand != null">`EXPAND` = #{expand}, </if>
+			<if test="isDisable != null">`IS_DISABLE` = #{isDisable}, </if>
+			<if test="configInfo != null">`CONFIG_INFO` = #{configInfo}</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from cr_task where ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from cr_task where ID in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

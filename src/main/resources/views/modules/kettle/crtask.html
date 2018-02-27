@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>km作业定时任务表</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" href="../../css/font-awesome.min.css">
+<link rel="stylesheet" href="../../plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="../../plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet" href="../../css/main.css">
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../plugins/layer/layer.js"></script>
+<script src="../../libs/bootstrap.min.js"></script>
+<script src="../../libs/vue.min.js"></script>
+<script src="../../plugins/jqgrid/grid.locale-cn.js"></script>
+<script src="../../plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="../../plugins/ztree/jquery.ztree.all.min.js"></script>
+<script src="../../js/common.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+		<div class="grid-btn">
+			<a v-if="hasPermission('generator:crtask:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a v-if="hasPermission('generator:crtask:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a v-if="hasPermission('generator:crtask:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+    
+    <div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+											<div class="form-group">
+			   	<div class="col-sm-2 control-label">状态：0=停止，1=启动</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.state" placeholder="状态：0=停止，1=启动"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">名称</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.name" placeholder="名称"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">表达式</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.exp" placeholder="表达式"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">实现类</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.javaClass" placeholder="实现类"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">说明</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.info" placeholder="说明"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">对象主键</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.oid" placeholder="对象主键"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">对象代码</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.ocode" placeholder="对象代码"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">对象名称</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.oname" placeholder="对象名称"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">对象描述</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.odescribe" placeholder="对象描述"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">对象排序</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.oorder" placeholder="对象排序"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">对象简拼</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.simpleSpell" placeholder="对象简拼"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">对象全拼</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.fullSpell" placeholder="对象全拼"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">创建时间</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.createDate" placeholder="创建时间"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">更新时间</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.updateDate" placeholder="更新时间"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">扩展信息</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.expand" placeholder="扩展信息"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">是否禁用</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.isDisable" placeholder="是否禁用"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">JSON格式配置</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="crTask.configInfo" placeholder="JSON格式配置"/>
+			    </div>
+			</div>
+							<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script src="../../js/modules/kettle/crtask.js"></script>
+</body>
+</html>

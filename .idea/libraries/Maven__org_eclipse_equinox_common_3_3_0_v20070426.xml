@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.eclipse.equinox:common:3.3.0-v20070426">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/common/3.3.0-v20070426/common-3.3.0-v20070426.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/common/3.3.0-v20070426/common-3.3.0-v20070426-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/common/3.3.0-v20070426/common-3.3.0-v20070426-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
