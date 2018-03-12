@@ -39,16 +39,16 @@ public class Db {
       this.dbType = dbType;
       Object dbStyle = null;
       if("oracle".equals(dbType)) {
-         dbStyle = new OracleStyle();
+         dbStyle = new OracleStyleMineMine();
       } else if("mysql".equals(dbType)) {
-         dbStyle = new MySqlStyle();
+         dbStyle = new MySqlStyleMineMine();
       } else if("postgresql".equals(dbType)) {
-         dbStyle = new PostgresStyle();
+         dbStyle = new PostgresStyleMineMine();
       }
 
       ClasspathLoader loader = new ClasspathLoader("sql");
       LowerCaseNameConversion nc = new LowerCaseNameConversion();
-      this.sqlManager = new SQLManager((DBStyle)dbStyle, loader, source, nc, new Interceptor[]{new DebugInterceptor()});
+      this.sqlManager = new SQLManager((MyDBStyle)dbStyle, loader, source, nc, new Interceptor[]{new DebugInterceptor()});
       if(db == null) {
          db = this;
       }
@@ -127,7 +127,9 @@ public class Db {
    }
 
    public String getCurrentDateStr14() {
-      String result = this.queryStr(this.sqlManager.getDbStyle().genSelectVal(this.sqlManager.getDbStyle().Date14Exp()).getTemplate(), new Object[0]);
+      MyDBStyle myDbStyle = (MyDBStyle) this.sqlManager.getDbStyle();
+      String date14Exp = myDbStyle.Date14Exp();
+      String result = this.queryStr(myDbStyle.genSelectVal(date14Exp).getTemplate(), new Object[0]);
       return result;
    }
 

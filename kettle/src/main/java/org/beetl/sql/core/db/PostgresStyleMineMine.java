@@ -1,10 +1,8 @@
 package org.beetl.sql.core.db;
 
-import org.beetl.sql.core.db.AbstractDBStyle;
-
 import java.util.Map;
 
-public class PostgresStyle extends AbstractDBStyle {
+public class PostgresStyleMineMine extends AbstractMyDBStyleMine {
 
    public String getPageSQL(String sql) {
       String pageSql = "select _a.* from ( \n" + sql + this.getOrderBy() + " \n) _a " + " limit " + this.HOLDER_START + "_pageSize" + this.HOLDER_END + " offset " + this.HOLDER_START + "_pageOffset" + this.HOLDER_END;

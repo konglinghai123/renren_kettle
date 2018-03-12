@@ -3,14 +3,12 @@ package org.beetl.sql.core.db;
 import org.beetl.sql.core.annotatoin.AssignID;
 import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
-import org.beetl.sql.core.db.AbstractDBStyle;
-import org.beetl.sql.core.db.KeyWordHandler;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-public class MySqlStyle extends AbstractDBStyle {
+public class MySqlStyleMineMine extends AbstractMyDBStyleMine {
 
    public String getPageSQL(String sql) {
       return sql + this.getOrderBy() + " \nlimit " + this.HOLDER_START + "_pageOffset" + this.HOLDER_END + " , " + this.HOLDER_START + "_pageSize" + this.HOLDER_END;
@@ -21,7 +19,7 @@ public class MySqlStyle extends AbstractDBStyle {
       param.put("_pageSize", Long.valueOf(size));
    }
 
-   public MySqlStyle() {
+   public MySqlStyleMineMine() {
       this.keyWordHandler = new KeyWordHandler() {
          public String getTable(String tableName) {
             return "`" + tableName + "`";
@@ -64,4 +62,5 @@ public class MySqlStyle extends AbstractDBStyle {
    public String Date14Exp() {
       return "DATE_FORMAT(NOW(),\'%Y%m%d%H%i%S\')";
    }
+
 }

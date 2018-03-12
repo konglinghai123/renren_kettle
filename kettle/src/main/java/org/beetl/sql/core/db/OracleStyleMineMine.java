@@ -3,13 +3,12 @@ package org.beetl.sql.core.db;
 import org.beetl.sql.core.SQLSource;
 import org.beetl.sql.core.annotatoin.AssignID;
 import org.beetl.sql.core.annotatoin.SeqID;
-import org.beetl.sql.core.db.AbstractDBStyle;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-public class OracleStyle extends AbstractDBStyle {
+public class OracleStyleMineMine extends AbstractMyDBStyleMine {
 
    public String getPageSQL(String sql) {
       String pageSql = "SELECT * FROM  (  SELECT beeltT.*, ROWNUM beetl_rn  FROM ( \n" + sql + this.getOrderBy() + "\n )  beeltT " + " WHERE ROWNUM <" + this.HOLDER_START + "_pageEnd" + this.HOLDER_END + ") " + "WHERE beetl_rn >= " + this.HOLDER_START + "_pageOffset" + this.HOLDER_END;

@@ -5,8 +5,6 @@ import org.beetl.sql.core.BeetlSQLException;
 import org.beetl.sql.core.NameConversion;
 import org.beetl.sql.core.SQLSource;
 import org.beetl.sql.core.annotatoin.*;
-import org.beetl.sql.core.db.*;
-import org.beetl.sql.core.db.DBStyle;
 import org.beetl.sql.core.engine.Beetl;
 import org.beetl.sql.core.kit.BeanKit;
 
@@ -14,9 +12,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public abstract class AbstractDBStyle implements DBStyle {
+public abstract class AbstractMyDBStyleMine implements MyDBStyle {
 
-   protected static org.beetl.sql.core.db.AbstractDBStyle adbs;
+   protected static AbstractMyDBStyleMine adbs;
    protected NameConversion nameConversion;
    protected MetadataManager metadataManager;
    public String STATEMENT_START;
@@ -549,7 +547,4 @@ public abstract class AbstractDBStyle implements DBStyle {
       return new SQLSource("select " + val + " as val");
    }
 
-   public String Date14Exp() {
-      throw new RuntimeException("未实现");
-   }
 }
